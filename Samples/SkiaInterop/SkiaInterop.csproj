@@ -1,8 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="2.88.3" />
-  </ItemGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <Configurations>Debug;Release;Release-Windows;Debug-Windows;Debug-Windows</Configurations>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(Configuration)'=='Release-Windows' or '$(Configuration)'=='Debug-Windows'">
+        <Reference Include="FFmpeg.AutoGen">
+            <HintPath>..\..\..\FFmpeg.AutoGen\FFmpeg.AutoGen\bin\$(Configuration)\netstandard2.1\FFmpeg.AutoGen.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(Configuration)'!='Release-Windows' and '$(Configuration)'!='Debug-Windows'">
+        <Reference Include="FFmpeg.AutoGen">
+            <HintPath>..\..\..\FFmpeg.AutoGen\FFmpeg.AutoGen\bin\$(Configuration)\netstandard2.1\FFmpeg.AutoGen.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="SkiaSharp" Version="2.88.3" />
+    </ItemGroup>
 </Project>

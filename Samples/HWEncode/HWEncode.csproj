@@ -1,16 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <Configurations>Debug;Release;Release-Windows;Debug-Windows;Debug-Windows</Configurations>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="OpenTK" Version="4.7.7" />
+    <ItemGroup Condition="'$(Configuration)'=='Release-Windows' or '$(Configuration)'=='Debug-Windows'">
+        <Reference Include="FFmpeg.AutoGen">
+            <HintPath>..\..\..\FFmpeg.AutoGen\FFmpeg.AutoGen\bin\$(Configuration)\netstandard2.1\FFmpeg.AutoGen.dll</HintPath>
+        </Reference>
+    </ItemGroup>
 
-    <Compile Include="../misc/GL2O/**/*.cs" />
+    <ItemGroup Condition="'$(Configuration)'!='Release-Windows' and '$(Configuration)'!='Debug-Windows'">
+        <Reference Include="FFmpeg.AutoGen">
+            <HintPath>..\..\..\FFmpeg.AutoGen\FFmpeg.AutoGen\bin\$(Configuration)\netstandard2.1\FFmpeg.AutoGen.dll</HintPath>
+        </Reference>
+    </ItemGroup>
 
-    <Content Include="Shaders/**/*.*">
-      <Link>Shaders/%(RecursiveDir)%(Filename)%(Extension)</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="OpenTK" Version="4.7.7" />
+
+        <Compile Include="../misc/GL2O/**/*.cs" />
+
+        <Content Include="Shaders/**/*.*">
+            <Link>Shaders/%(RecursiveDir)%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 </Project>

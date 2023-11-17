@@ -1,36 +1,48 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <LangVersion>10</LangVersion>
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>10</LangVersion>
+        <InvariantGlobalization>true</InvariantGlobalization>
 
-    <PackageId>FFmpeg.ApiWrapper</PackageId>
-    <Description>Low level, mostly safe FFmpeg API wrappers based on FFmpeg.AutoGen.</Description>
-    <Version>0.0.0-dev</Version>
-    <Product>FFmpeg.ApiWrapper</Product>
-    <PackageProjectUrl>https://github.com/dubiousconst282/FFmpegWrapper</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Authors>dubiousconst282</Authors>
+        <PackageId>FFmpeg.ApiWrapper</PackageId>
+        <Description>Low level, mostly safe FFmpeg API wrappers based on FFmpeg.AutoGen.</Description>
+        <Version>0.0.0-dev</Version>
+        <Product>FFmpeg.ApiWrapper</Product>
+        <PackageProjectUrl>https://github.com/dubiousconst282/FFmpegWrapper</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Authors>dubiousconst282</Authors>
 
-    <PackageOutputPath>$(SolutionDir)artifacts</PackageOutputPath>
+        <PackageOutputPath>$(SolutionDir)artifacts</PackageOutputPath>
 
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <!-- Don't warn about missing xmldocs for public entities. -->
-    <NoWarn>CS1591;CS1573</NoWarn>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <!-- Don't warn about missing xmldocs for public entities. -->
+        <NoWarn>CS1591;CS1573</NoWarn>
 
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-  </PropertyGroup>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
-  <ItemGroup>
-    <PackageReference Include="FFmpeg.AutoGen" Version="6.0.0" />
-    <PackageReference Include="System.Collections.Immutable" Version="7.0.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-  </ItemGroup>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <Configurations>Debug;Release;Release-Windows;Debug-Windows;Debug-Windows</Configurations>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(Configuration)'=='Release-Windows' or '$(Configuration)'=='Debug-Windows'">
+        <Reference Include="FFmpeg.AutoGen">
+            <HintPath>..\..\FFmpeg.AutoGen\FFmpeg.AutoGen\bin\$(Configuration)\$(TargetFramework)\FFmpeg.AutoGen.dll</HintPath>
+        </Reference>
+   </ItemGroup>
+
+    <ItemGroup Condition="'$(Configuration)'!='Release-Windows' and '$(Configuration)'!='Debug-Windows'">
+        <Reference Include="FFmpeg.AutoGen">
+            <HintPath>..\..\FFmpeg.AutoGen\FFmpeg.AutoGen\bin\$(Configuration)\$(TargetFramework)\FFmpeg.AutoGen.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.Collections.Immutable" Version="7.0.0" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    </ItemGroup>
 </Project>
